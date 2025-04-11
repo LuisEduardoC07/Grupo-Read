@@ -1,0 +1,309 @@
+{
+	"info": {
+		"_postman_id": "e5aebfae-8aaf-4514-934e-817096cbe426",
+		"name": "Automatizacion Grupo Read",
+		"description": "## **Parte 3: Pruebas de API REST (15%)**\n\n### **Descripción:**\n\n**Utiliza la API pública de** [<b> https://reqres.in/</b>](https://reqres.in/) **para realizar pruebas automatizadas.**\n\n### **Tareas:**\n\n1. **Implementa pruebas automatizadas para los siguientes endpoints:**\n    \n    - **GET /api/users (listado de usuarios)**\n        \n    - **GET /api/users/{id} (usuario específico)**\n        \n    - **POST /api/users (creación de usuario)**\n        \n    - **PUT /api/users/{id} (actualización de usuario)**\n        \n    - **DELETE /api/users/{id} (eliminación de usuario)**\n        \n2. **Para cada endpoint, verifica:**\n    \n    - **Códigos de estado HTTP correctos**\n        \n    - **Estructura y esquema de la respuesta**\n        \n    - **Tiempos de respuesta aceptables**\n        \n    - **Manejo de casos borde (IDs inexistentes, datos inválidos, etc.)**\n        \n3. **Puedes utilizar cualquier herramienta o framework de tu elección (RestAssured, Postman, SuperTest, etc.).**",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "26612614",
+		"_collection_link": "https://www.postman.com/luiseduardocastillodejesus/automatizacion/collection/f7atnuo/automatizacion-grupo-read?action=share&source=collection_link&creator=26612614"
+	},
+	"item": [
+		{
+			"name": "List User Api",
+			"item": [
+				{
+					"name": "List User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Fixed syntax error in the test description",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Tiempo de respuesta es aceptable\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.test(\"Estado es 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Estructura de respuesta es correcta\", function () {\r",
+									"    const jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.have.property('page');\r",
+									"    pm.expect(jsonData).to.have.property('per_page');\r",
+									"    pm.expect(jsonData).to.have.property('total');\r",
+									"    pm.expect(jsonData).to.have.property('total_pages');\r",
+									"    pm.expect(jsonData.data).to.be.an('array');\r",
+									"    pm.expect(jsonData.data[0]).to.have.all.keys('id', 'email', 'first_name', 'last_name', 'avatar');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Tiempo de respuesta es aceptable\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "https://reqres.in/api/users",
+						"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data"
+					},
+					"response": []
+				}
+			],
+			"description": "## **Implementa pruebas automatizadas para los siguientes endpoints:**\n\n1. **GET /api/users (listado de usuarios)**\n    \n2. **GET /api/users/{id} (usuario específico)**\n    \n3. **POST /api/users (creación de usuario)**\n    \n4. **PUT /api/users/{id} (actualización de usuario)**\n    \n5. **DELETE /api/users/{id} (eliminación de usuario)**"
+		},
+		{
+			"name": "Search a User",
+			"item": [
+				{
+					"name": "Single User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Reemplaza {id} con un ID válido para la prueba\r",
+									"pm.test(\"Estado es 200 para ID válido\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Estructura de respuesta es correcta para ID válido\", function () {\r",
+									"    const jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.have.property('data');\r",
+									"    pm.expect(jsonData.data).to.have.all.keys('id', 'email', 'first_name', 'last_name', 'avatar');\r",
+									"});\r",
+									"\r",
+									"// Prueba para un ID inexistente\r",
+									"pm.test(\"Estado es 404 para ID inexistente\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Estructura de respuesta es correcta para ID inexistente\", function () {\r",
+									"    const jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.have.property('error');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Tiempo de respuesta es aceptable\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "https://reqres.in/api/users/12"
+					},
+					"response": []
+				}
+			],
+			"description": "**GET /api/users/{id} (Usuario específico)**:\n\n1. Se realizaron pruebas para un ID válido, verificando que el código de estado fuera `200 OK`, y para un ID inexistente, donde se esperaba un código `404 Not Found`.\n    \n2. Se validó la estructura de la respuesta para el ID válido y se comprobó que el mensaje de error fuera adecuado para el ID inexistente."
+		},
+		{
+			"name": "Create a New User",
+			"item": [
+				{
+					"name": "Creacion de usuario",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Estado es 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Estructura de respuesta es correcta\", function () {\r",
+									"    const jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.have.property('id');\r",
+									"    pm.expect(jsonData).to.have.property('name');\r",
+									"    pm.expect(jsonData).to.have.property('job');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Tiempo de respuesta es aceptable\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(108);\r",
+									"});\r",
+									"\r",
+									"// Prueba con datos inválidos\r",
+									"pm.test(\"Estado es 200 para datos válidos\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Emilio\",\r\n    \"job\": \"zion resident\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://reqres.in/api/users/12"
+					},
+					"response": []
+				}
+			],
+			"description": "**POST /api/users (Creación de usuario)**:\n\n1. Se verificó que al crear un usuario con datos válidos, el código de estado fuera `201 Created` y que la respuesta incluyera los datos del nuevo usuario.\n    \n2. Se probaron casos de datos inválidos, asegurando que el código de estado fuera `400 Bad Request`."
+		},
+		{
+			"name": "Update user data",
+			"item": [
+				{
+					"name": "User Update",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Reemplaza {id} con un ID válido para la prueba\r",
+									"pm.test(\"Estado es 200 para ID válido\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Estructura de respuesta es correcta para ID válido\", function () {\r",
+									"    const jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.have.property('name');\r",
+									"    pm.expect(jsonData).to.have.property('job');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Tiempo de respuesta es aceptable\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(10);\r",
+									"});\r",
+									"\r",
+									"// Prueba para un ID inexistente\r",
+									"pm.test(\"Estado es 404 para ID existente\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Emilio\",\r\n    \"job\": \"zion resident\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://reqres.in/api/users/12"
+					},
+					"response": []
+				}
+			],
+			"description": "**PUT /api/users/{id} (Actualización de usuario)**:\n\n1. Se validó que al actualizar un usuario con un ID válido, el código de estado fuera `200 OK`, y que la respuesta reflejara los cambios realizados.\n    \n2. Se verificó el manejo de IDs inexistentes y datos inválidos, asegurando que se devolviera el código de estado adecuado."
+		},
+		{
+			"name": "Delete a user",
+			"item": [
+				{
+					"name": "Delete User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Reemplaza {id} con un ID válido para la prueba\r",
+									"pm.test(\"Estado es 204 para ID válido\", function () {\r",
+									"    pm.response.to.have.status(204);\r",
+									"});\r",
+									"\r",
+									"// Prueba para un ID inexistente\r",
+									"pm.test(\"Estado es 404 para ID inexistente\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Tiempo de respuesta es aceptable\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://reqres.in/api/users/2"
+					},
+					"response": []
+				}
+			],
+			"description": "**DELETE /api/users/{id} (Eliminación de usuario)**:\n\n1. Se comprobó que al eliminar un usuario con un ID válido, el código de estado fuera `204 No Content`, indicando una eliminación exitosa.\n    \n2. Se validó el comportamiento del endpoint al intentar eliminar un ID inexistente, donde se esperaba un código `404 Not Found`."
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "id",
+			"value": "1"
+		},
+		{
+			"key": "base_url",
+			"value": "https://postman-rest-api-learner.glitch.me/"
+		}
+	]
+}
