@@ -6,8 +6,6 @@ La solución se divide en cuatro partes principales:
 
 Automatización con Cypress.
 
-Automatización con Selenium WebDriver.
-
 Pruebas de API REST.
 
 Creación de una Matriz de Pruebas y un Informe de Defectos.
@@ -19,12 +17,6 @@ text
 │   ├── integration/          # Casos de prueba automatizados
 │   ├── plugins/              # Configuración adicional
 │   └── support/              # Comandos personalizados y POM
-├── selenium/                 # Proyecto Selenium WebDriver
-│   ├── src/
-│   │   ├── main/
-│   │   │   └── java/         # Clases POM y utilidades
-│   │   └── test/
-│   │       └── java/         # Casos de prueba automatizados
 ├── api-tests/                # Pruebas API REST
 │   ├── tests/                # Casos para endpoints (GET, POST, etc.)
 │   └── utils/                # Métodos reutilizables
